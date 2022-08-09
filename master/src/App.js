@@ -1,43 +1,48 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const Father = styled.div`
+const Wrapper = styled.div`
   display: flex;
 `;
 
+const rotateAnimation = keyframes`
+  0%{
+    transform: rotate(0deg);
+    border-radius: 0px;
+  }
+  50%{
+    transform: rotate(360deg);
+    border-radius: 100px;
+  }
+  100%{
+    transform: rotate(0deg);
+    border-radius: 0px;
+  }
+`;
+
+const Emoji = styled.span`
+  font-size: 36px;
+`
+
 const Box = styled.div`
-  background-color: ${(props) => props.bgColor};
-  width: 100px;
-  height: 100px;
-`;
-
-// extended styled components
-const Circle = styled(Box)`
-  border-radius: 50px;
-`;
-
-const Btn = styled(Box)`
-  color: white;
+  height: 200px;
+  width: 200px;
   background-color: tomato;
-  border: 0;
-  border-radius: 15px;
-`
-
-// attrs로 Input 컴포넌트 전체에 required:true 속성을 먹일 수 있음
-const Input = styled.input.attrs({required: true})`
-  color: tomato;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${rotateAnimation} 1s linear infinite;
+  ${Emoji}:hover {
+      font-size: 100px;
+  }
+`;
 
 function App() {
   return (
-    // Father 컴포넌트를 header로 사용
-    <Father as="header">
-      <Box bgColor="teal" />
-      <Circle bgColor="tomato" />
-      <Btn>Log in</Btn>
-      {/* btn을 a태그로 사용하고 싶을 때 */}
-      <Btn as="a" href="/">Log in</Btn>
-      <Input />
-    </Father>
+    <Wrapper>
+      <Box>
+        <Emoji as="p">☺️</Emoji>
+      </Box>
+    </Wrapper>
   );
 }
 
