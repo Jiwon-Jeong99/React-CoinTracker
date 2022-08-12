@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   padding: 0px 20px;
+  max-width: 480px;
+  margin: 0 auto;
 `;
 
 const Header = styled.div`
@@ -37,40 +40,55 @@ const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
-const coins = [
-  {
-    id: "btc-bitcoin",
-    name: "Bitcoin",
-    symbol: "BTC",
-    rank: 1,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-  {
-    id: "hex-hex",
-    name: "HEX",
-    symbol: "HEX",
-    rank: 3,
-    is_new: false,
-    is_active: true,
-    type: "token",
-  },
-];
+const Loader = styled.div`
+  text-align: center;
+  display: block;
+`;
+
+interface CoinInterface {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+}
 
 const Coins = () => {
+  const [coins, setCoins] = useState<CoinInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+  //  시작할 때 1번만 실행
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("https://api.coinpaprika.com/v1/coins");
+      const json = await response.json();
+      //   앞의 100개만 잘라서 보여줌
+      setCoins(json.slice(0, 100));
+      setLoading(false);
+    })();
+  }, []);
+  console.log(coins);
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      <CoinsList>
-        {coins.map((coin) => (
-          <Coin key={coin.id}>
-            <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
-          </Coin>
-        ))}
-      </CoinsList>
+      {/* loading = true면 Loading...을 false면 coin을 */}
+      {/* coin목록을 다 불러왔을 때만 false로 변환됨 */}
+      {loading ? (
+        <Loader>Loading...</Loader>
+      ) : (
+        <CoinsList>
+          {coins.map((coin) => (
+            <Coin key={coin.id}>
+              <Link to={`/${coin.id}`}>
+                {coin.name} &rarr;
+              </Link>
+            </Coin>
+          ))}
+        </CoinsList>
+      )}
     </Container>
   );
 };
