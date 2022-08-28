@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {useState} from "react";
 
 interface ContainerProps {
   bgColor: string;
@@ -29,6 +30,7 @@ const Circle = ({
   borderColor,
   text = "default text",
 }: CircleProps) => {
+  const [counter, setCounter] = useState(1);
   return (
     <>
       {/* borderColor에 아무것도 적지 않으면 기본값으로 white를 주겠다 */}

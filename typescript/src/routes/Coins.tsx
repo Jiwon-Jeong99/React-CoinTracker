@@ -1,3 +1,4 @@
+// 4까지
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -82,9 +83,7 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>
-                {coin.name} &rarr;
-              </Link>
+              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
             </Coin>
           ))}
         </CoinsList>
