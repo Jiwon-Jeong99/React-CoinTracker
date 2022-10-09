@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -24,9 +25,10 @@ const Coin = styled.div`
   margin-bottom: 10px;
   border-radius: 15px;
   a {
+    align-items: center;
     transition: color 0.2s ease-in;
     /* 박스의 끝부분을 클릭해도 연결 가능 a태그에 padding을 주었기 때문에*/
-    display: block;
+    display: flex;
     padding: 20px;
   }
   &:hover {
@@ -46,6 +48,12 @@ const Loader = styled.div`
   display: block;
 `;
 
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -56,9 +64,16 @@ interface CoinInterface {
   type: string;
 }
 
+interface state {
+  name: string;
+}
+
 const Coins = () => {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  console.log(location);
+
   //  시작할 때 1번만 실행
   useEffect(() => {
     (async () => {
@@ -83,7 +98,15 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              {/* 리액트 라우터 6부터 Link to에 state 바로 적기 불가 */}
+              <Link
+                to={`/${coin.id}`} state={coin.name}
+              >
+                <Img
+                  src={` https://cryptocurrencyliveprices.com/img/${coin.id}.png`}
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinsList>
