@@ -1,3 +1,1 @@
-# React-CoinTracker 
-
-### with React-query, Recoil
+# React-CoinTracker with React-query
