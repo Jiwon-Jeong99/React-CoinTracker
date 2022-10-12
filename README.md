@@ -1,4 +1,4 @@
-# React-MasterClass
+# React-CoinTracker with React-query
 
 # Typescript tip
 
