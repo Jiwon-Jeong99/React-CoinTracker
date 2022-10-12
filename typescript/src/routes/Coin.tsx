@@ -3,10 +3,10 @@ import { useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 
-// interface가 안되는 이유 : useParams가 유니온 타입으로 되어 있어서임 
+// interface가 안되는 이유 : useParams가 유니온 타입으로 되어 있어서임
 type RouteParams = {
-    coinId : string;
-}
+  coinId: string;
+};
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -32,9 +32,7 @@ const Loader = styled.div`
 `;
 
 interface ILocation {
-  state: {
-    name: string;
-  };
+  state: string;
 }
 
 const Coin = () => {
@@ -43,14 +41,12 @@ const Coin = () => {
   // const {state} = useLocation<RouteState>();
   // //click할 때 state 생성
   const { state } = useLocation() as ILocation;
-  console.log(state.name);
+  console.log(state);
 
   return (
     <Container>
       <Header>
-        <Title>
-          {state?.name || "Loading.."}코인 {coinId}
-        </Title>
+        <Title>{ state || "Loading..."}</Title>
       </Header>
       {loading ? <Loader>Loading...</Loader> : null}
     </Container>

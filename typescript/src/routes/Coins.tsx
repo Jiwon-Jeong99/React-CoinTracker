@@ -64,10 +64,6 @@ interface CoinInterface {
   type: string;
 }
 
-interface state {
-  name: string;
-}
-
 const Coins = () => {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState(true);
